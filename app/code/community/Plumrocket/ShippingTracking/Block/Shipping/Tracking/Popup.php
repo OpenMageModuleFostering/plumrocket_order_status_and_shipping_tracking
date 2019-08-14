@@ -24,10 +24,12 @@ class Plumrocket_ShippingTracking_Block_Shipping_Tracking_Popup extends Mage_Shi
 
         //$order = Mage::getModel('sales/order')->load(Mage::registry('current_shipping_info')->getOrderId());
 
-        if (Mage::getStoreConfig('shippingtracking/general/enabled')) {
+        if (Mage::helper('shippingtracking')->moduleEnabled()) {
             foreach($_results as $shipid => $_result) {
                 foreach($_result as $key => $track) {
-                    
+                    if (!is_object($track)) {
+                        continue;
+                    }
                     $carrier = $track->getCarrier();
                     if (Mage::getStoreConfig('shippingtracking/'.$carrier.'_api/enabled')) {
 

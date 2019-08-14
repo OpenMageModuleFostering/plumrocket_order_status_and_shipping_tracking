@@ -16,10 +16,14 @@
  */
 
 
-class Plumrocket_ShippingTracking_Helper_Data extends Mage_Core_Helper_Abstract
+class Plumrocket_ShippingTracking_Helper_Data extends Plumrocket_ShippingTracking_Helper_Main
 {
 	protected $_trackingInfo = array();
 
+	public function moduleEnabled($store = null)
+    {
+       return (bool)Mage::getStoreConfig('shippingtracking/general/enabled', $store);
+    }
 
 	public function getShippingTrackingUrl()
 	{

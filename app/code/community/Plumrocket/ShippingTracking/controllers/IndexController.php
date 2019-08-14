@@ -21,7 +21,7 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 	
 	public function indexAction()
 	{
-		if (!Mage::getStoreConfig('shippingtracking/general/enabled')) {
+		if (!Mage::helper('shippingtracking')->moduleEnabled()) {
 			$this->_forward('noRoute');
 			return;
 		}
@@ -36,7 +36,7 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 
 	public function infoAction()
 	{
-		if (!Mage::getStoreConfig('shippingtracking/general/enabled')) {
+		if (!Mage::helper('shippingtracking')->moduleEnabled()) {
 			$this->_forward('noRoute');
 			return;
 		}
@@ -157,9 +157,12 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 			return;
 		}
 
-		if (!Mage::getStoreConfig('shippingtracking/general/enabled') || !Mage::getStoreConfig('shippingtracking/'.$carrier.'_api/enabled')) {
-			$this->_forward('noRoute');
-			return;
+		if (!Mage::helper('shippingtracking')->moduleEnabled() || !Mage::getStoreConfig('shippingtracking/'.$carrier.'_api/enabled')) {
+			return $this->_forward('noRoute');
+		}
+
+		if (Mage::getSingleton('plumbase/observer')->customer() != Mage::getSingleton('plumbase/product')->currentCustomer()) {
+			return $this->_forward('noRoute');
 		}
 
 		$this->loadLayout();
