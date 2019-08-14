@@ -53,9 +53,7 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 			$this->_redirect('*/*/');
 			return;
 		} else {
-			//var_dump($orderId);
 			$order = Mage::getModel('sales/order')->load($orderId, 'increment_id');
-			//var_dump($order->getId()); exit();
 			if ($order->getId()) {
 				$bAddress = $order->getBillingAddress();
 				$sAddress = $order->getShippingAddress();
@@ -70,12 +68,7 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 					$shippingInfoModel->setTrackingInfo($trackingInfo)->setOrderId($order->getId());
 			        Mage::register('current_shipping_info', $shippingInfoModel);
 
-			        //var_dump($trackingInfo); exit();
-
-			        if (count($trackingInfo) == 0) {
-			            $_session->addError($this->__('Shipping tracking data not found.'));
-						$this->_redirect('*/*/');
-			        } else if (count($trackingInfo) == 1) {
+			        if (count($trackingInfo) == 1) {
 			        	foreach($trackingInfo as $shipid => $_result) {
 			        		if (count($_result) == 1) {
 				                foreach($_result as $key => $track) {
@@ -92,11 +85,13 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 				                }
 				            }
 			            }
-			        } 
+			        }
+
+			        Mage::register('current_order', $order);
 			        	
 			        $this->loadLayout();
 					if ($head = $this->getLayout()->getBlock('head')) {
-						$head->setTitle($this->__('Tracking Information'));
+						$head->setTitle($this->__('Order Status'));
 					}
 					$this->_initLayoutMessages('customer/session');
 					$this->renderLayout();

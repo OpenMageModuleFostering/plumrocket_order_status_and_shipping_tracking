@@ -16,13 +16,27 @@
  */
 ?>
 <?php $_results = $this->getTrackingInfo(); ?>
-
+<?php $order = Mage::registry('current_order'); ?>
+<div class="page-title title-buttons">
+    <h1><?php echo $this->__('Order Status'); ?></h1>
+</div>
+<br/>
+<div class="fieldset">
+    <h2 class="legend"><?php echo $this->__('General Information') ?></h2>
+    <ul class="form-list">
+        <li class="fields">
+            <strong><?php echo $this->__('Order') ?>:</strong> #<?php echo $order->getIncrementId() ?>
+        </li>
+        <li class="fields">
+            <strong><?php echo $this->__('Order Status') ?>:</strong> <?php echo $order->getStatusLabel() ?>
+        </li>
+    </ul>
+</div>
+<br/>
 <?php if(sizeof($_results)>0): ?>
 <?php foreach($_results as $shipid => $_result): ?>
     <?php if($shipid): ?>
-    <div class="page-title title-buttons">
-       <h1><?php echo $this->__('Tracking Information'); ?> (<?php echo $this->__('Shipment #').$shipid; ?>)</h1>
-   </div>
+       <h2><?php echo $this->__('Tracking Information'); ?> (<?php echo $this->__('Shipment #').$shipid; ?>)</h2>
     <?php endif; ?>
     <?php if(sizeof($_result)>0): ?>
         <?php $rowCount = sizeof($_result); $counter = 1; ?>
@@ -160,7 +174,8 @@
 
 <?php endforeach; ?>
 <?php else: ?>
-    <p><?php echo $this->__('There is no tracking available.'); ?></p>
+    <h2><?php echo $this->__('Tracking Information'); ?></h2>
+    <strong><?php echo $this->__('There is no tracking available.'); ?></strong>
 <?php endif; ?>
 <div class="buttons-set">
     <p class="back-link"><a href="<?php echo $this->getUrl('*/', array('order' => $this->getRequest()->getParam('order'))) ?>"><small>« </small><?php echo $this->__('Back') ?></a></p>
