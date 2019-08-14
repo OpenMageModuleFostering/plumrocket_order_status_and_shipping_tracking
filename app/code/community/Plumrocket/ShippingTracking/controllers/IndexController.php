@@ -149,7 +149,7 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 
 	public function uspsAction()
 	{
-    	$this->_processTrackingAction('fedex', $this->__('USPS Tracking Number'));
+    	$this->_processTrackingAction('usps', $this->__('USPS Tracking Number'));
 	}
 
 

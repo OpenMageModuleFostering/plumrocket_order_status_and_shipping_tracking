@@ -19,7 +19,7 @@
 <config>
     <modules>
         <Plumrocket_ShippingTracking>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
             <wiki>http://wiki.plumrocket.com/wiki/Magento_Order_Status_and_Shipping_Tracking_v1.x_Extension</wiki>
         </Plumrocket_ShippingTracking>
     </modules>

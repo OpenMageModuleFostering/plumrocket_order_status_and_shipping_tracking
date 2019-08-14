@@ -21,7 +21,7 @@
     <Plumrocket_ShippingTracking>
       <active>true</active>
       <codePool>community</codePool>
-      <version>1.0.1</version>
+      <version>1.0.2</version>
       <name>Plumrocket Order Status &amp; Shipping Tracking</name>
       <depends>
       	<Plumrocket_Base />
