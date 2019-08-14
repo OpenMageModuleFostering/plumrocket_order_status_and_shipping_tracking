@@ -21,6 +21,12 @@ class Plumrocket_ShippingTracking_Helper_Data extends Mage_Core_Helper_Abstract
 	protected $_trackingInfo = array();
 
 
+	public function getShippingTrackingUrl()
+	{
+		return Mage::getUrl('shippingtracking');
+	}
+
+
 	protected function _getDecryptedConfig($key)
 	{
 		if (empty($key)) {

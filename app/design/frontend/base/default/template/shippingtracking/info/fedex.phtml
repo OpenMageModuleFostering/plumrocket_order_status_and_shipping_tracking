@@ -16,25 +16,37 @@
  */
 ?>
 
-<?php  
-	$info = $this->getInfo();
-
-	$_dateFormat = $this->__('m/d/Y');
-	$_timeFormat = $this->__('g:i a');
-?>
-
 <div class="page-title">
     <h1>
     	<?php echo $this->__('FedEx Tracking Number %s', ( $this->getNumber() ? '('.$this->htmlEscape($this->getNumber()).')' : '' )) ?>
-    	<?php if ($order = $this->getRequest()->getParam('order')) { echo ' - '.$this->__('Order').' #'.$this->escapeHtml($order); } ?>
     </h1>
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 
-<?php if ($this->getNumber()) {  ?>
+<?php $order = $this->getOrder(); ?>
+<?php  if ($order->getId()) {  ?>
 	<br/>
+	<?php  
+		$info = $this->getInfo();
+		$_dateFormat = $this->__('m/d/Y');
+		$_timeFormat = $this->__('g:i a');
+	?>
+	<div class="fieldset">
+		<h2 class="legend"><?php echo $this->__('General Information') ?></h2>
+		<ul class="form-list">
+			<li class="fields">
+				<strong><?php echo $this->__('Order') ?>:</strong> #<?php echo $order->getIncrementId() ?>
+			</li>
+			<li class="fields">
+				<strong><?php echo $this->__('Order Status') ?>:</strong> <?php echo $order->getStatusLabel() ?>
+			</li>
+		</ul>
+	</div>
 	<?php if (!$info || $info->HighestSeverity != 'SUCCESS') { ?>
+		<div class="fieldset">
+		<br/>
 		<strong><?php echo $this->__('Tracking information is not available at this time. Please check back later or double-check the tracking number entered and try again.'); ?></strong>
+		</div>
 	<?php } else { ?>
 		<div class="fieldset">
 			<h2 class="legend"><?php echo $this->__('Shipment Progress') ?></h2>
@@ -112,4 +124,9 @@
 		</div>
 	<?php } ?>
 	<br/><br/>
+<?php } else { ?>
+	<div class="fieldset">
+		<strong><?php echo $this->__('Tracking number is not associated with any order at our store.'); ?></strong>
+		<br/><br/>
+	</div>
 <?php } ?>

@@ -22,7 +22,7 @@ class Plumrocket_ShippingTracking_Block_Shipping_Tracking_Popup extends Mage_Shi
     {
         $_results = parent::getTrackingInfo();
 
-        $order = Mage::getModel('sales/order')->load(Mage::registry('current_shipping_info')->getOrderId());
+        //$order = Mage::getModel('sales/order')->load(Mage::registry('current_shipping_info')->getOrderId());
 
         if (Mage::getStoreConfig('shippingtracking/general/enabled')) {
             foreach($_results as $shipid => $_result) {
@@ -35,7 +35,7 @@ class Plumrocket_ShippingTracking_Block_Shipping_Tracking_Popup extends Mage_Shi
                             ->setErrorMessage(null)
                             ->setUrl($this->getUrl('shippingtracking/index/'.$carrier, array(
                                 'number' => $track->getTracking(),
-                                'order'  => $order->getIncrementId(), //Mage::app()->getRequest()->getParam('order'),
+                                //'order'  => $order->getIncrementId(), //Mage::app()->getRequest()->getParam('order'),
                             )));
                     }
 

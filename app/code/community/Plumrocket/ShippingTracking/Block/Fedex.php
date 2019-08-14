@@ -19,10 +19,11 @@
 class Plumrocket_ShippingTracking_Block_Fedex extends Plumrocket_ShippingTracking_Block_Abstract
 {   
 
+	protected $_carrierCore = 'fedex';
+
 	public function getInfo()
 	{
-		$number = $this->getNumber();
-		return $this->helper('shippingtracking')->getFedexTrackingInfo($number);
+		return $this->helper('shippingtracking')->getFedexTrackingInfo($this->getNumber());
 	}
 
 

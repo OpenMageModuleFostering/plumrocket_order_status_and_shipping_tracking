@@ -16,23 +16,21 @@
  */
 ?>
 
-<?php  
-	$info = $this->getInfo();
-	$_dateFormat = $this->__('m/d/Y');
-	$_timeFormat = $this->__('g:i a');
-?>
-
 <div class="page-title">
     <h1>
     	<?php echo $this->__('UPS Tracking Number %s', ( $this->getNumber() ? '('.$this->htmlEscape($this->getNumber()).')' : '' )) ?>
-    	<?php if ($order = $this->getRequest()->getParam('order')) { echo ' - '.$this->__('Order').' #'.$this->escapeHtml($order); } ?>
     </h1>
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-<?php if ($this->getNumber()) { ?>
 
+<?php $order = $this->getOrder(); ?>
+<?php if ($order->getId()) {  ?>
 	<br/>
-
+	<?php
+		$info = $this->getInfo();
+		$_dateFormat = $this->__('m/d/Y');
+		$_timeFormat = $this->__('g:i a');
+	?>
 	<?php if ($info->Response->ResponseStatusDescription != 'Success') { ?>
 		<strong><?php echo $this->escapeHtml($info->Response->Error->ErrorDescription); ?></strong>
 	<?php } else { ?>
@@ -41,6 +39,12 @@
 		<div class="fieldset">
 			<h2 class="legend"><?php echo $this->__('General Information') ?></h2>
 			<ul class="form-list">
+				<li class="fields">
+					<strong><?php echo $this->__('Order') ?>:</strong> #<?php echo $order->getIncrementId() ?>
+				</li>
+				<li class="fields">
+					<strong><?php echo $this->__('Order Status') ?>:</strong> <?php echo $order->getStatusLabel() ?>
+				</li>
 				<?php $delivered = $lastAction->Status->StatusType->Code == 'D'; ?>
 				<li class="fields">
 					<label for="company"><?php echo $this->__('Delivered On:') ?></label>
@@ -127,4 +131,6 @@
 		<?php } ?>
 	<?php } ?>
 	<br/><br/>
+<?php } else { ?>
+	<strong><?php echo $this->__('Tracking number is not associated with any order on our store.'); ?></strong>
 <?php } ?>

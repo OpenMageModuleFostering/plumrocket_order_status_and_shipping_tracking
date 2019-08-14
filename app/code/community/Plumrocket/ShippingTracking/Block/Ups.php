@@ -17,12 +17,12 @@
 
 
 class Plumrocket_ShippingTracking_Block_Ups extends Plumrocket_ShippingTracking_Block_Abstract
-{   
+{
+	protected $_carrierCore = 'ups';
 
 	public function getInfo()
 	{
-		$number = $this->getNumber();
-		return $this->helper('shippingtracking')->getUpsTrackingInfo($number);
+		return $this->helper('shippingtracking')->getUpsTrackingInfo($this->getNumber());
 	}
 
 	public function getTimeFromStr($str)

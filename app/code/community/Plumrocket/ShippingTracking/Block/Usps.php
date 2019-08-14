@@ -18,11 +18,11 @@
 
 class Plumrocket_ShippingTracking_Block_Usps extends Plumrocket_ShippingTracking_Block_Abstract
 {   
+	protected $_carrierCore = 'usps';
 
 	public function getInfo()
 	{
-		$number = $this->getNumber();
-		return $this->helper('shippingtracking')->getUspsTrackingInfo($number);
+		return $this->helper('shippingtracking')->getUspsTrackingInfo($this->getNumber());
 	}
 
 }

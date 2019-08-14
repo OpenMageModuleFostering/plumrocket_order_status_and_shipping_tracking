@@ -18,10 +18,59 @@
 
 abstract class Plumrocket_ShippingTracking_Block_Abstract extends Mage_Core_Block_Template
 {   
+	protected $_carrierCore = 'none';
+
+	protected $_number = null;
+	protected $_shipmentTrack = null;
+	protected $_order = null;
+	
+	/*
+	public function getCarrier()
+	{
+		return $this->_carrierCore;
+	}
+
+	public function setCarrier($carrier)
+	{
+		$this->_carrierCore = true;
+		return $this;
+	}
+	*/
 
 	public function getNumber()
 	{
-		return Mage::app()->getRequest()->getParam('number');
+		if (is_null($this->_number)) {
+			$this->_number = Mage::app()->getRequest()->getParam('number');
+		}
+		return $this->_number;
+	}
+
+	public function getShipmentTrack()
+	{
+		if (is_null($this->_shipmentTrack)) {
+			$this->_shipmentTrack = Mage::getModel('sales/order_shipment_track');
+
+			if ($tackNumber = $this->getNumber()) {
+				$this->_shipmentTrack = $this->_shipmentTrack->getCollection()
+					->addFieldToFilter('track_number', $tackNumber)
+					->addFieldToFilter('carrier_code', $this->_carrierCore)
+					->setPageSize(1)
+					->getFirstItem();
+			}
+		}
+
+		return $this->_shipmentTrack;
+	}
+
+	public function getOrder()
+	{
+		if (is_null($this->_order)) {
+			$this->_order = Mage::getModel('sales/order');
+			if ($orderId = $this->getShipmentTrack()->getOrderId()) {
+				$this->_order->load($orderId);
+			}
+		}
+		return $this->_order;
 	}
 
 }

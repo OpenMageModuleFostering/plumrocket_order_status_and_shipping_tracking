@@ -24,7 +24,7 @@
   $_request = Mage::app()->getRequest();
 ?>
 <p>
-   <?php echo $this->__('Please enter the order number and phone number (or email address) from your customer agreement for shipping tracking.'); ?>
+   <?php echo $this->__('Please enter the required information below to check your order status.'); ?>
 </p>
 <br/>
 <form action="<?php echo $this->getUrl('*/*/info') ?>" method="post" autocomplete="off" id="shipping-tracking" class="scaffold-form" enctype="multipart/form-data">
@@ -52,6 +52,11 @@
     </div>
     <div class="buttons-set">
         <?php /* <p class="back-link"><a href="http://dev2.plumserver.com/index.php/customer/account/index/"><small>« </small>Back</a></p> */ ?>
-        <button type="submit" title="<?php echo $this->__('Track') ?>" class="button"><span><span><?php echo $this->__('Track') ?></span></span></button>
+        <button type="submit" title="<?php echo $this->__('Track') ?>" class="button"><span><span><?php echo $this->__('Track Order') ?></span></span></button>
     </div>
 </form>
+<script type="text/javascript">
+    //<![CDATA[
+        var dataForm = new VarienForm('shipping-tracking', true);
+    //]]>
+</script>

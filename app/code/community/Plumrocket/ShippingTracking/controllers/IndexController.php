@@ -23,6 +23,7 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 	{
 		if (!Mage::getStoreConfig('shippingtracking/general/enabled')) {
 			$this->_forward('noRoute');
+			return;
 		}
 
 		$this->loadLayout();
@@ -35,6 +36,11 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 
 	public function infoAction()
 	{
+		if (!Mage::getStoreConfig('shippingtracking/general/enabled')) {
+			$this->_forward('noRoute');
+			return;
+		}
+		
 		$_request 	= $this->getRequest();
 		$_session 	= Mage::getSingleton('customer/session');
 		
@@ -43,7 +49,7 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 
 
 		if (empty($info) || empty($orderId)) {
-			$_session->addError($this->__('Make sure that you have entered the Order Number and phone number (or email address).'));
+			$_session->addError($this->__('Make sure that you have entered the Order Number and phone number (or email address) correctly.'));
 			$this->_redirect('*/*/');
 			return;
 		} else {
@@ -78,7 +84,7 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 				                    if (Mage::getStoreConfig('shippingtracking/'.$carrier.'_api/enabled')) {
 				                    	$this->_redirect('*/*/'.$carrier, array(
 				                    		'number' 	=> $track->getTracking(),
-				                    		'order'		=> $order->getIncrementId(),
+				                    		//'order'		=> $order->getIncrementId(),
 				                    	));
 				                    	return;
 				                    }
@@ -100,7 +106,7 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 			}
 		}
 
-		$_session->addError($this->__('Data combination is not valid. Please check order number and phone number (or email address).'));
+		$_session->addError($this->__('Make sure that you have entered the Order Number and phone number (or email address) correctly.'));
 		$this->_redirect('*/*/index', array(
 			'order' => $orderId,
 			'info' 	=> $info,
@@ -149,8 +155,16 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 
 	protected function _processTrackingAction($carrier, $pageTitle)
 	{
+		$rCarrier = $this->getRequest()->getParam('carrier');
+		//if ($rCarrier && $carrier != $rCarrier) {
+		if ($rCarrier) {
+			$this->_redirect('*/*/'.strtolower($rCarrier), array('number' => $this->getRequest()->getParam('number')));
+			return;
+		}
+
 		if (!Mage::getStoreConfig('shippingtracking/general/enabled') || !Mage::getStoreConfig('shippingtracking/'.$carrier.'_api/enabled')) {
 			$this->_forward('noRoute');
+			return;
 		}
 
 		$this->loadLayout();
