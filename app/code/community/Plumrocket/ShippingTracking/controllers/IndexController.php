@@ -72,7 +72,9 @@ class Plumrocket_ShippingTracking_IndexController extends Mage_Core_Controller_F
 			        	foreach($trackingInfo as $shipid => $_result) {
 			        		if (count($_result) == 1) {
 				                foreach($_result as $key => $track) {
-				                    
+				                    if (!is_object($track)) {
+				                    	continue;
+				                    }
 				                    $carrier = $track->getCarrier();
 				                    if (Mage::getStoreConfig('shippingtracking/'.$carrier.'_api/enabled')) {
 				                    	$this->_redirect('*/*/'.$carrier, array(

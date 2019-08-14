@@ -31,6 +31,9 @@
         <reference name="content">
             <block type="core/template" name="shippingTracking.main" template="shippingtracking/main.phtml"/>
         </reference>
+        <reference name="before_body_end">
+            <block type="core/template" template="shippingtracking/footer.phtml" />
+        </reference>
     </shippingtracking_index_index>
 
     <shippingtracking_index_info>
@@ -39,6 +42,9 @@
         </reference>
         <reference name="content">
             <block type="shippingtracking/shipping_tracking_popup" name="shippingTracking.info" template="shippingtracking/info.phtml"/>
+        </reference>
+        <reference name="before_body_end">
+            <block type="core/template" template="shippingtracking/footer.phtml" />
         </reference>
     </shippingtracking_index_info>
 

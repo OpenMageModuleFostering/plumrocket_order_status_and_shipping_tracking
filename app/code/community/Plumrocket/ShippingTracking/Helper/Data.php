@@ -137,7 +137,7 @@ class Plumrocket_ShippingTracking_Helper_Data extends Plumrocket_ShippingTrackin
 		if (!isset($this->_trackingInfo[$number])) {
 
 			$xml = urlencode('<TrackRequest USERID="'.urlencode($this->_getDecryptedConfig('usps_api/user_id')).'"><TrackID ID="'.$number.'"></TrackID></TrackRequest>');
-			$response = file_get_contents($url = 'http://production.shippingapis.com/ShippingAPITest.dll?API=TrackV2&XML='.$xml);
+			$response = file_get_contents($url = 'http://production.shippingapis.com/ShippingAPI.dll?API=TrackV2&XML='.$xml);
 
 			$this->_trackingInfo[$number] = @simplexml_load_string($response);
 
