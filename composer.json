@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Plumrocket_Order_Status_and_Shipping_Tracking",
+    "type": "magento-module",
+    "license": "End-user-License-Agreement",
+    "homepage": "",
+    "description": "Magento UPS integration, Magento FedEx and Magento USPS tracking allows to display UPS, FedEx, USPS tracking information right from your magento store.",
+    "authors": [
+    {
+        "name": "Plumrocket Team",
+        "email": "support@plumrocket.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
